@@ -1,0 +1,34 @@
+Setting up an EC2 instance #
+The first step is to set up an AWS account and log into the AWS management console. AWS provides a free account option with free-tier access to a number of services including EC2. Next, provision a machine using the following steps:
+
+Under “Find Services”, search for EC2.
+Click “Launch Instance”.
+Select a free-tier Amazon Linux AMI.
+Click “Review and Launch”, and then “Launch”.
+Create a key pair and save it to your local machine.
+Click “Launch Instances”.
+Click “View Instances”.
+
+Connect EC2 using Bitvise Client SSH
+
+sudo yum install -y python3.7
+python3 --version
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python3 get-pip.py
+pip --version
+pip install --user jupyter
+
+Once Jupyter is installed, we’ll need to set up a firewall restriction so that we can connect directly to the machine on port 8888, where Jupyter runs by default. This approach is the quickest way to get connected to the machine, but it’s advised to use SSH tunneling to connect to the machine rather than a direct connection over the open web. You can open up port 8888 for your local machine by performing the following steps from the EC2 console:
+
+Select your EC2 instance.
+Under “Description”, select security groups.
+Click “Actions” -> “Edit Inbound Rules”.
+Add a new rule: change the port to 8888, select “My IP”.
+Click “Save”.
+
+jupyter notebook --ip private_ip
+
+When you run the jupyter notebook command, you’ll get a URL with a token that can be used to connect to the machine. Before entering the URL into your browser, you’ll need to swap the Private IP output to the console with the Public IP of the EC2 instance
+
+http://public-IP:8888/?token=
+    __________________________________________________________
